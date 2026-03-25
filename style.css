@@ -157,10 +157,11 @@ body {
 }
 
 .media-layout {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    gap: 20px;
-    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 0;
 }
 
 .media-main {

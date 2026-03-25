@@ -42,7 +42,7 @@
 <script>
 // Asset list: first is video, then images
 const assets = [
-    { type: 'video', src: 'https://www.youtube.com/embed/PhhJX4UiVpM', thumb: '../images/proj3.jpg' },
+    { type: 'video', src: 'https://www.youtube.com/embed/PhhJX4UiVpM', thumb: 'https://img.youtube.com/vi/PhhJX4UiVpM/maxresdefault.jpg' },
     { type: 'image', src: '../images/proj3.jpg' },
     { type: 'image', src: '../images/proj3.jpg' },
     { type: 'image', src: '../images/proj3.jpg' }
@@ -57,6 +57,9 @@ function renderEmphasis() {
         const aspect = document.createElement('div');
         aspect.className = 'video-aspect';
         const iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.objectFit = 'cover';
         iframe.src = asset.src;
         iframe.frameBorder = 0;
         iframe.allowFullscreen = true;
