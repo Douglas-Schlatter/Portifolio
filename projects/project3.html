@@ -18,16 +18,18 @@
 <h1>Project 3</h1>
 
 
+
 <div class="media-layout">
     <div class="media-main">
-        <div class="video-box">
-            <div class="video-aspect">
-                <iframe
-                    src="https://www.youtube.com/embed/PhhJX4UiVpM"
-                    frameborder="0"
-                    allowfullscreen>
-                </iframe>
+        <div class="emphasis-box" id="emphasis-box">
+            <!-- Emphasized asset will be rendered here by JS -->
+        </div>
+        <div class="steam-bar-container">
+            <button class="steam-arrow left" id="steam-arrow-left" aria-label="Previous asset">&#8592;</button>
+            <div class="steam-bar" id="steam-bar">
+                <!-- Asset thumbnails will be rendered here by JS -->
             </div>
+            <button class="steam-arrow right" id="steam-arrow-right" aria-label="Next asset">&#8594;</button>
         </div>
         <div class="project-text">
             <p>
@@ -35,11 +37,140 @@
             </p>
         </div>
     </div>
-    <div class="side-images">
-        <img src="../images/proj3.jpg">
-        <img src="../images/proj3.jpg">
-        <img src="../images/proj3.jpg">
-    </div>
+</div>
+
+<script>
+// Asset list: first is video, then images
+const assets = [
+    { type: 'video', src: 'https://www.youtube.com/embed/PhhJX4UiVpM', thumb: '../images/proj3.jpg' },
+    { type: 'image', src: '../images/proj3.jpg' },
+    { type: 'image', src: '../images/proj3.jpg' },
+    { type: 'image', src: '../images/proj3.jpg' }
+];
+let emphasisIndex = 0;
+
+function renderEmphasis() {
+    const box = document.getElementById('emphasis-box');
+    box.innerHTML = '';
+    const asset = assets[emphasisIndex];
+    if (asset.type === 'video') {
+        const aspect = document.createElement('div');
+        aspect.className = 'video-aspect';
+        const iframe = document.createElement('iframe');
+        iframe.src = asset.src;
+        iframe.frameBorder = 0;
+        iframe.allowFullscreen = true;
+        aspect.appendChild(iframe);
+        box.appendChild(aspect);
+    } else {
+        const aspect = document.createElement('div');
+        aspect.className = 'video-aspect';
+        const img = document.createElement('img');
+        img.src = asset.src;
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
+        img.style.borderRadius = '8px';
+        aspect.appendChild(img);
+        box.appendChild(aspect);
+    }
+}
+
+function renderSteamBar() {
+    const bar = document.getElementById('steam-bar');
+    bar.innerHTML = '';
+    assets.forEach((asset, idx) => {
+        const thumb = document.createElement('div');
+        thumb.className = 'steam-thumb' + (idx === emphasisIndex ? ' active' : '');
+        if (asset.type === 'video') {
+            // Use thumbnail for video (could be improved with a real video thumb)
+            const img = document.createElement('img');
+            img.src = asset.thumb || '../images/proj3.jpg';
+            img.alt = 'Video';
+            thumb.appendChild(img);
+            const playIcon = document.createElement('span');
+            playIcon.className = 'play-icon';
+            playIcon.innerHTML = '&#9658;';
+            thumb.appendChild(playIcon);
+        } else {
+            const img = document.createElement('img');
+            img.src = asset.src;
+            img.alt = 'Image';
+            thumb.appendChild(img);
+        }
+        thumb.onclick = () => {
+            emphasisIndex = idx;
+            renderEmphasis();
+            renderSteamBar();
+        };
+        bar.appendChild(thumb);
+    });
+}
+
+function scrollEmphasis(dir) {
+    emphasisIndex = (emphasisIndex + dir + assets.length) % assets.length;
+    renderEmphasis();
+    renderSteamBar();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('steam-arrow-left').onclick = () => scrollEmphasis(-1);
+    document.getElementById('steam-arrow-right').onclick = () => scrollEmphasis(1);
+    renderEmphasis();
+    renderSteamBar();
+});
+</script>
+
+<script>
+function swapMedia(imgElem) {
+    const mainBox = document.getElementById('main-media-box');
+    const mainMedia = document.getElementById('main-media');
+    // If current main is video, swap with image
+    if (mainMedia.querySelector('iframe')) {
+        const video = mainMedia.querySelector('iframe');
+        const newImg = document.createElement('img');
+        newImg.src = imgElem.src;
+        newImg.style.width = '100%';
+        newImg.style.height = '100%';
+        newImg.style.objectFit = 'cover';
+        newImg.style.borderRadius = '8px';
+        mainMedia.innerHTML = '';
+        mainMedia.appendChild(newImg);
+        // Replace clicked image with video
+        const newVideo = document.createElement('iframe');
+        newVideo.src = video.src;
+        newVideo.frameBorder = 0;
+        newVideo.allowFullscreen = true;
+        imgElem.parentNode.replaceChild(newVideo, imgElem);
+        newVideo.style.width = '110%';
+        newVideo.style.maxWidth = '198px';
+        newVideo.style.aspectRatio = '3/2';
+        newVideo.style.borderRadius = '6px';
+        newVideo.style.border = '1px solid #2a2f3a';
+        newVideo.style.cursor = 'pointer';
+        newVideo.onclick = function() { swapMedia(newVideo); };
+    } else if (mainMedia.querySelector('img')) {
+        // If current main is image, swap back with video
+        const mainImg = mainMedia.querySelector('img');
+        const newVideo = document.createElement('iframe');
+        newVideo.src = 'https://www.youtube.com/embed/PhhJX4UiVpM';
+        newVideo.frameBorder = 0;
+        newVideo.allowFullscreen = true;
+        mainMedia.innerHTML = '';
+        mainMedia.appendChild(newVideo);
+        // Replace clicked video with image
+        const newImg = document.createElement('img');
+        newImg.src = mainImg.src;
+        newImg.style.width = '110%';
+        newImg.style.maxWidth = '198px';
+        newImg.style.borderRadius = '6px';
+        newImg.style.border = '1px solid #2a2f3a';
+        newImg.style.cursor = 'pointer';
+        newImg.onclick = function() { swapMedia(newImg); };
+        imgElem.parentNode.replaceChild(newImg, imgElem);
+    }
+}
+</script>
 </div>
 
 </body>
