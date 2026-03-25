@@ -85,17 +85,42 @@ body {
     color: #e6e6e6;
 }
 
+
+.header-title {
+    background: #0f1117;
+    padding-top: 32px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+.main-title {
+    font-size: 2.7em;
+    font-weight: bold;
+    color: #e6e6e6;
+    letter-spacing: 1px;
+}
+.sub-title {
+    font-size: 1.7em;
+    color: #4da3ff;
+    margin-top: 6px;
+    font-weight: 500;
+}
+
 .navbar {
     background: #151922;
     padding: 15px;
     border-bottom: 1px solid #2a2f3a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
 }
 
 .navbar a {
     color: #e6e6e6;
-    margin-right: 20px;
     text-decoration: none;
     font-weight: bold;
+    font-size: 1.1em;
+    margin: 0 10px;
 }
 
 .navbar a:hover {
