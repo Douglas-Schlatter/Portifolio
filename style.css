@@ -176,8 +176,8 @@ body {
 
 /* Responsive 1080x720 aspect ratio */
 .video-aspect {
-    width: 600px;
-    height: 400px;
+    width: 980px;
+    height: 620px;
     background: #000;
     border-radius: 8px;
     overflow: hidden;
