@@ -130,6 +130,13 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
+    width: 90vw;
+}
+
+@media (min-width: 1024px) {
+    .emphasis-box {
+        max-width: 1200px;
+    }
 }
 body {
     margin: 0;
@@ -252,6 +259,15 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .media-main {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 }
 
 
@@ -260,8 +276,8 @@ body {
 
 /* Responsive 1080x720 aspect ratio */
 .video-aspect {
-    max-width: 90vw;
-    max-height: 80vh;
+    max-width: 900vw;
+    max-height: 100vh;
     width: 100%;
     aspect-ratio: 16 / 9;
     background: #000;
@@ -272,6 +288,15 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+/* Desktop view - larger video */
+@media (min-width: 1024px) {
+    .video-aspect {
+        max-width: 1200px;
+        max-height: 900px;
+    }
+}
+
 .video-aspect iframe,
 .video-aspect video,
 .video-aspect img {
