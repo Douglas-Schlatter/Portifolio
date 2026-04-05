@@ -8,7 +8,7 @@
     max-width: 100vw;
 }
 .project-card.emphasis {
-    max-width: 1200px;
+    max-width: 65vw;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -35,12 +35,14 @@
 .project-card.emphasis img {
     width: 100%;
     height: auto;
+    max-height: 40vh;
     object-fit: cover;
     border-radius: 0;
     margin-bottom: 0;
 }
 .project-card.emphasis h3 {
-    margin: 10px;
+    margin: 20px;
+    font-size: 2em;
 }
 .emphasis-desc {
     margin: 0 10px 14px 10px;
