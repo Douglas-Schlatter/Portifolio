@@ -60,7 +60,7 @@ function renderEmphasis() {
         const iframe = document.createElement('iframe');
         iframe.style.width = '100%';
         iframe.style.height = '100%';
-        iframe.style.objectFit = 'cover';
+        iframe.style.border = 'none';
         iframe.src = asset.src;
         iframe.frameBorder = 0;
         iframe.allowFullscreen = true;
@@ -126,12 +126,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
+const VIDEO_URL = 'https://www.youtube.com/embed/PhhJX4UiVpM';
+
 function swapMedia(imgElem) {
     const mainBox = document.getElementById('main-media-box');
     const mainMedia = document.getElementById('main-media');
     // If current main is video, swap with image
     if (mainMedia.querySelector('iframe')) {
-        const video = mainMedia.querySelector('iframe');
         const newImg = document.createElement('img');
         newImg.src = imgElem.src;
         newImg.style.width = '100%';
@@ -142,7 +143,7 @@ function swapMedia(imgElem) {
         mainMedia.appendChild(newImg);
         // Replace clicked image with video
         const newVideo = document.createElement('iframe');
-        newVideo.src = video.src;
+        newVideo.src = VIDEO_URL;
         newVideo.frameBorder = 0;
         newVideo.allowFullscreen = true;
         imgElem.parentNode.replaceChild(newVideo, imgElem);
@@ -157,7 +158,7 @@ function swapMedia(imgElem) {
         // If current main is image, swap back with video
         const mainImg = mainMedia.querySelector('img');
         const newVideo = document.createElement('iframe');
-        newVideo.src = 'https://www.youtube.com/embed/PhhJX4UiVpM';
+        newVideo.src = VIDEO_URL;
         newVideo.frameBorder = 0;
         newVideo.allowFullscreen = true;
         mainMedia.innerHTML = '';
