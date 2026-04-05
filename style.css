@@ -29,7 +29,7 @@
 }
 
 .project-card.emphasis:hover {
-    transform: scale(1.08);
+    /*transform: scale(1.08);*/
     box-shadow: 0 0 28px #4da3ff99, 0 4px 18px #000c;
 }
 .project-card.emphasis img {
