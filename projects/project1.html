@@ -17,50 +17,186 @@
 
 <h1>Project 1</h1>
 
-<div class="project-layout">
 
-<div class="project-text">
 
-<p>
-Description of the project.
-
-You can write a long description here.
-
-Technologies:
-Unity, C#, AI, VR, etc.
-</p>
-
+<div class="media-layout">
+    <div class="media-main">
+        <div class="emphasis-box" id="emphasis-box">
+            <!-- Emphasized asset will be rendered here by JS -->
+        </div>
+        <div class="steam-bar-container">
+            <button class="steam-arrow left" id="steam-arrow-left" aria-label="Previous asset">&#8592;</button>
+            <div class="steam-bar" id="steam-bar">
+                <!-- Asset thumbnails will be rendered here by JS -->
+            </div>
+            <button class="steam-arrow right" id="steam-arrow-right" aria-label="Next asset">&#8594;</button>
+        </div>
+        <div class="project-text">
+            <p>
+            Description here
+            </p>
+        </div>
+    </div>
 </div>
 
-<div class="project-image">
+<script>
+// Asset list: first is video, then images
+const assets = [
+    { type: 'video', src: 'https://www.youtube.com/embed/PhhJX4UiVpM', thumb: 'https://img.youtube.com/vi/PhhJX4UiVpM/maxresdefault.jpg' },
+    { type: 'image', src: '../images/proj3.jpg' },
+    { type: 'image', src: '../images/proj3.jpg' },
+    { type: 'image', src: '../images/proj3.jpg' }
+];
+let emphasisIndex = 0;
 
-<img src="../images/proj1.png">
+function renderEmphasis() {
+    const box = document.getElementById('emphasis-box');
+    box.innerHTML = '';
+    const asset = assets[emphasisIndex];
+    if (asset.type === 'video') {
+        const aspect = document.createElement('div');
+        aspect.className = 'video-aspect';
+        const iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.border = 'none';
+        iframe.src = asset.src;
+        iframe.frameBorder = 0;
+        iframe.allowFullscreen = true;
+        aspect.appendChild(iframe);
+        box.appendChild(aspect);
+    } else {
+        const aspect = document.createElement('div');
+        aspect.className = 'video-aspect';
+        const img = document.createElement('img');
+        img.src = asset.src;
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
+        img.style.borderRadius = '8px';
+        aspect.appendChild(img);
+        box.appendChild(aspect);
+    }
+}
 
-</div>
+function renderSteamBar() {
+    const bar = document.getElementById('steam-bar');
+    bar.innerHTML = '';
+    assets.forEach((asset, idx) => {
+        const thumb = document.createElement('div');
+        thumb.className = 'steam-thumb' + (idx === emphasisIndex ? ' active' : '');
+        if (asset.type === 'video') {
+            // Use thumbnail for video (could be improved with a real video thumb)
+            const img = document.createElement('img');
+            img.src = asset.thumb || '../images/proj3.jpg';
+            img.alt = 'Video';
+            thumb.appendChild(img);
+            const playIcon = document.createElement('span');
+            playIcon.className = 'play-icon';
+            playIcon.innerHTML = '&#9658;';
+            thumb.appendChild(playIcon);
+        } else {
+            const img = document.createElement('img');
+            img.src = asset.src;
+            img.alt = 'Image';
+            thumb.appendChild(img);
+        }
+        thumb.onclick = () => {
+            emphasisIndex = idx;
+            renderEmphasis();
+            renderSteamBar();
+        };
+        bar.appendChild(thumb);
+    });
+}
 
-</div>
+function scrollEmphasis(dir) {
+    emphasisIndex = (emphasisIndex + dir + assets.length) % assets.length;
+    renderEmphasis();
+    renderSteamBar();
+}
 
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('steam-arrow-left').onclick = () => scrollEmphasis(-1);
+    document.getElementById('steam-arrow-right').onclick = () => scrollEmphasis(1);
+    renderEmphasis();
+    renderSteamBar();
+});
+</script>
+
+<script>
+const VIDEO_URL = 'https://www.youtube.com/embed/PhhJX4UiVpM';
+
+function swapMedia(imgElem) {
+    const mainBox = document.getElementById('main-media-box');
+    const mainMedia = document.getElementById('main-media');
+    // If current main is video, swap with image
+    if (mainMedia.querySelector('iframe')) {
+        const newImg = document.createElement('img');
+        newImg.src = imgElem.src;
+        newImg.style.width = '100%';
+        newImg.style.height = '100%';
+        newImg.style.objectFit = 'cover';
+        newImg.style.borderRadius = '8px';
+        mainMedia.innerHTML = '';
+        mainMedia.appendChild(newImg);
+        // Replace clicked image with video
+        const newVideo = document.createElement('iframe');
+        newVideo.src = VIDEO_URL;
+        newVideo.frameBorder = 0;
+        newVideo.allowFullscreen = true;
+        imgElem.parentNode.replaceChild(newVideo, imgElem);
+        newVideo.style.width = '110%';
+        newVideo.style.maxWidth = '100vw';
+        newVideo.style.aspectRatio = '3/2';
+        newVideo.style.borderRadius = '6px';
+        newVideo.style.border = '1px solid #2a2f3a';
+        newVideo.style.cursor = 'pointer';
+        newVideo.onclick = function() { swapMedia(newVideo); };
+    } else if (mainMedia.querySelector('img')) {
+        // If current main is image, swap back with video
+        const mainImg = mainMedia.querySelector('img');
+        const newVideo = document.createElement('iframe');
+        newVideo.src = VIDEO_URL;
+        newVideo.frameBorder = 0;
+        newVideo.allowFullscreen = true;
+        mainMedia.innerHTML = '';
+        mainMedia.appendChild(newVideo);
+        // Replace clicked video with image
+        const newImg = document.createElement('img');
+        newImg.src = mainImg.src;
+        newImg.style.width = '110%';
+        newImg.style.maxWidth = '198px';
+        newImg.style.borderRadius = '6px';
+        newImg.style.border = '1px solid #2a2f3a';
+        newImg.style.cursor = 'pointer';
+        newImg.onclick = function() { swapMedia(newImg); };
+        imgElem.parentNode.replaceChild(newImg, imgElem);
+    }
+}
+</script>
 </div>
 
 <footer>
+    <h3>Contact</h3>
     <div class="footer-text">
-        <img src="../images/proj1.png" alt="Email">
-        <span>email</span>
+        <img src="../images/footer/mail.png"" alt="Email">
+        <span>douglas.ardenghi18@gmail.com</span>
     </div>
     <div class="footer-text">
-        <img src="../images/proj1.png" alt="Phone">
-        <span>number</span>
+        <img src="../images/footer/phone.png"" alt="Phone">
+        <span>51 998567173</span>
     </div>
-    <a href="https://linkedin.com" class="footer-item" target="_blank">
-        <img src="../images/proj1.png" alt="LinkedIn">
+    <a href="https://www.linkedin.com/in/douglas-ardenghi-schlatter-62b5b823b/" class="footer-item" target="_blank">
+        <img src="../images/footer/lklogo.png" alt="LinkedIn">
         <span>LinkedIn</span>
     </a>
-    <a href="https://itch.io" class="footer-item" target="_blank">
-        <img src="../images/proj1.png" alt="Itch.io">
+    <a href="https://dougydev.itch.io/" class="footer-item" target="_blank">
+        <img src="../images/footer/itlogo.png" alt="Itch.io">
         <span>Itch.io</span>
     </a>
-    <a href="https://github.com" class="footer-item" target="_blank">
-        <img src="../images/proj1.png" alt="GitHub">
+    <a href="https://github.com/Douglas-Schlatter" class="footer-item" target="_blank">
+        <img src="../images/footer/glogo.png" alt="GitHub">
         <span>GitHub</span>
     </a>
 </footer>
