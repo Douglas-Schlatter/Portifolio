@@ -143,6 +143,9 @@ body {
     font-family: Arial, sans-serif;
     background-color: #0f1117;
     color: #e6e6e6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 
@@ -189,6 +192,10 @@ body {
 
 .container {
     padding: 30px;
+}
+
+h1 {
+    text-align: center;
 }
 
 /* GRID */
@@ -292,8 +299,8 @@ body {
 /* Desktop view - larger video */
 @media (min-width: 1024px) {
     .video-aspect {
-        max-width: 1200px;
-        max-height: 900px;
+        max-width: 1000px;
+        max-height: 800px;
     }
 }
 
@@ -334,4 +341,49 @@ body {
 .project-text {
     margin-top: 10px;
     max-width: 700px;
+}
+
+/* FOOTER */
+footer {
+    background: #151922;
+    border-top: 1px solid #2a2f3a;
+    padding: 30px;
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.footer-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #e6e6e6;
+    transition: color 0.2s;
+}
+
+.footer-item:hover {
+    color: #4da3ff;
+}
+
+.footer-item img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.footer-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #e6e6e6;
+}
+
+.footer-text img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
 }
