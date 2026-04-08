@@ -17,7 +17,7 @@
     <div class="about-section">
         <h1>About</h1>
         <div class="about-content">
-            <img src='../images/proj2.jpg' alt="Profile picture">
+            <img src='images/proj2.jpg' alt="Profile picture">
             <p>
                 Write about yourself here.
                 Game developer, AI, Unity, research, etc.
@@ -49,6 +49,41 @@
         <span>GitHub</span>
     </a>
 </footer>
+
+<!-- Secret Duck Easter Egg -->
+<div class="secret-duck" id="secretDuck">
+    <img src="duck.png" alt="Secret Duck">
+</div>
+
+<!-- Duck Popup Message -->
+<div class="duck-popup" id="duckPopup">You found the secret duck :)</div>
+
+<!-- Audio for duck sound -->
+<audio id="duckSound" src="duck.mp3"></audio>
+
+<script>
+    const duck = document.getElementById('secretDuck');
+    const popup = document.getElementById('duckPopup');
+    const duckSound = document.getElementById('duckSound');
+    
+    duck.addEventListener('click', function() {
+        // Show popup
+        popup.style.display = 'block';
+        
+        // Play duck sound
+        duckSound.currentTime = 0;
+        duckSound.play();
+        
+        // Add animation class
+        popup.classList.add('show');
+        
+        // Hide popup after 3 seconds
+        setTimeout(function() {
+            popup.style.display = 'none';
+            popup.classList.remove('show');
+        }, 1000);
+    });
+</script>
 
 </body>
 </html>
